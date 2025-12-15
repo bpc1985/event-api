@@ -11,7 +11,7 @@ import (
 type User struct {
 	ID       int64  `gorm:"primaryKey"`
 	Email    string `gorm:"unique;not null" binding:"required"`
-	Password string `gorm:"not null" binding:"required"`
+	Password string `gorm:"not null" binding:"required" json:"-"`
 }
 
 func (u *User) Save() error {

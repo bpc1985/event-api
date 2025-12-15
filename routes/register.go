@@ -50,3 +50,35 @@ func cancelRegistration(context *gin.Context) {
 
 	context.JSON(http.StatusOK, gin.H{"message": "Successfully canceled registration for the event."})
 }
+
+func getAttendeesForEvent(context *gin.Context) {
+	eventId, err := strconv.ParseInt(context.Param("id"), 10, 64)
+	if err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"message": "Could not parse event id."})
+		return
+	}
+
+	attendees, err := models.GetAttendeesByEventID(eventId)
+	if err != nil {
+		context.JSON(http.StatusInternalServerError, gin.H{"message": "Could not fetch attendees for the event. Try again later."})
+		return
+	}
+
+	context.JSON(http.StatusOK, attendees)
+}
+
+func getEventsByAttendee(context *gin.Context) {
+	userId, err := strconv.ParseInt(context.Param("id"), 10, 64)
+	if err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"message": "Could not parse user id."})
+		return
+	}
+
+	events, err := models.GetEventsByAttendeeID(userId)
+	if err != nil {
+		context.JSON(http.StatusInternalServerError, gin.H{"message": "Could not fetch events for the user. Try again later."})
+		return
+	}
+
+	context.JSON(http.StatusOK, events)
+}
