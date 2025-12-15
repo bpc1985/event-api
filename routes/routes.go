@@ -6,6 +6,8 @@ import (
 	"example.com/rest-api/middlewares"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
 func RegisterRoutes(server *gin.Engine) {
@@ -50,4 +52,12 @@ func RegisterRoutes(server *gin.Engine) {
 		authGroup.POST("/:id/register", registerForEvent)
 		authGroup.DELETE("/:id/register", cancelRegistration)
 	}
+
+	server.GET("/swagger/*any", func(c *gin.Context) {
+		if c.Request.RequestURI == "/swagger/" {
+			c.Redirect(302, "/swagger/index.html")
+			return
+		}
+		ginSwagger.WrapHandler(swaggerFiles.Handler, ginSwagger.URL("http://localhost:8080/swagger/doc.json"))(c)
+	})
 }
