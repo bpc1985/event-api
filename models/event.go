@@ -11,7 +11,7 @@ type Event struct {
 	Name        string    `gorm:"not null" binding:"required"`
 	Description string    `gorm:"not null" binding:"required"`
 	Location    string    `gorm:"not null" binding:"required"`
-	DateTime    time.Time `gorm:"not null" binding:"required"`
+	Datetime    time.Time `gorm:"not null" binding:"required"`
 	UserID      int64     `gorm:"not null"`
 }
 
@@ -40,7 +40,7 @@ func (event *Event) Update() error {
 		Name:        event.Name,
 		Description: event.Description,
 		Location:    event.Location,
-		DateTime:    event.DateTime,
+		Datetime:    event.Datetime,
 	})
 	return result.Error
 }

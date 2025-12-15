@@ -11,6 +11,7 @@ type Registration struct {
 func GetAttendeesByEventID(eventID int64) ([]User, error) {
 	var users []User
 	result := db.DB.
+		Select("users.id, users.firstname, users.lastname, users.email").
 		Joins("JOIN registrations ON users.id = registrations.user_id").
 		Where("registrations.event_id = ?", eventID).
 		Find(&users)
@@ -19,10 +20,9 @@ func GetAttendeesByEventID(eventID int64) ([]User, error) {
 
 func GetEventsByAttendeeID(userID int64) ([]Event, error) {
 	var events []Event
-	result := db.DB.Table("events e").
-		Select("e.id, e.user_id, e.name, e.description, e.dateTime, e.location").
-		Joins("JOIN registrations a ON e.id = a.event_id").
-		Where("a.user_id = ?", userID).
+	result := db.DB.
+		Joins("JOIN registrations ON events.id = registrations.event_id").
+		Where("registrations.user_id = ?", userID).
 		Find(&events)
 	return events, result.Error
 }

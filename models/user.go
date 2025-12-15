@@ -9,9 +9,11 @@ import (
 )
 
 type User struct {
-	ID       int64  `gorm:"primaryKey"`
-	Email    string `gorm:"unique;not null" binding:"required"`
-	Password string `gorm:"not null" binding:"required" json:"-"`
+	ID        int64  `gorm:"primaryKey"`
+	Firstname string `gorm:"default:''" json:"firstname,omitempty"`
+	Lastname  string `gorm:"default:''" json:"lastname,omitempty"`
+	Email     string `gorm:"unique;not null" binding:"required" json:"email"`
+	Password  string `gorm:"not null" binding:"required" json:"password,omitempty"`
 }
 
 func (u *User) Save() error {
