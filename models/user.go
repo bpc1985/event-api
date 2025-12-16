@@ -9,7 +9,7 @@ import (
 )
 
 type User struct {
-	ID        int64  `gorm:"primaryKey"`
+	ID        int64  `gorm:"primaryKey" json:"id"`
 	Firstname string `gorm:"default:''" json:"firstname,omitempty"`
 	Lastname  string `gorm:"default:''" json:"lastname,omitempty"`
 	Email     string `gorm:"unique;not null" binding:"required" json:"email"`

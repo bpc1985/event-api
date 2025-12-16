@@ -7,12 +7,12 @@ import (
 )
 
 type Event struct {
-	ID          int64     `gorm:"primaryKey"`
-	Name        string    `gorm:"not null" binding:"required"`
-	Description string    `gorm:"not null" binding:"required"`
-	Location    string    `gorm:"not null" binding:"required"`
-	Datetime    time.Time `gorm:"not null" binding:"required"`
-	UserID      int64     `gorm:"not null"`
+	ID          int64     `gorm:"primaryKey" json:"id"`
+	Name        string    `gorm:"not null" binding:"required" json:"name"`
+	Description string    `gorm:"not null" binding:"required" json:"description"`
+	Location    string    `gorm:"not null" binding:"required" json:"location"`
+	Datetime    time.Time `gorm:"not null" binding:"required" json:"datetime"`
+	UserID      int64     `gorm:"not null" json:"userId"`
 }
 
 func (e *Event) Save() error {
